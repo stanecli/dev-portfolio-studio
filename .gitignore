@@ -25,5 +25,8 @@
 # Typescript
 *.tsbuildinfo
 
+# Generated TypeGen schema snapshot
+/schema.json
+
 # Dotenv and similar local-only files
 *.local

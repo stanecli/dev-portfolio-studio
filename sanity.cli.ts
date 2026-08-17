@@ -3,7 +3,14 @@ import {defineCliConfig} from 'sanity/cli'
 export default defineCliConfig({
   api: {
     projectId: '9m67uprr',
-    dataset: 'production'
+    dataset: 'production',
+  },
+  typegen: {
+    enabled: true,
+    path: '../app-dev-portfolio/src/**/*.{ts,tsx,js,jsx,astro}',
+    schema: 'schema.json',
+    generates: '../app-dev-portfolio/sanity.types.ts',
+    overloadClientMethods: true,
   },
   deployment: {
     /**
