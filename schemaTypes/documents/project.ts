@@ -1,5 +1,8 @@
 import {CaseIcon} from '@sanity/icons/Case'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType, type SlugIsUniqueValidator} from 'sanity'
+
+const isUniqueProjectSlug: SlugIsUniqueValidator = (slug, context) =>
+  context.defaultIsUnique(slug, context)
 
 export const project = defineType({
   name: 'project',
@@ -10,67 +13,57 @@ export const project = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'localizedString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title', maxLength: 96},
-      validation: (rule) => rule.required(),
+      options: {source: 'title.en', maxLength: 96, isUnique: isUniqueProjectSlug},
+      validation: (rule) =>
+        rule.required().custom((slug) => {
+          if (!slug?.current || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug.current)) return true
+          return 'Use lowercase letters, numbers, and single hyphens only'
+        }),
     }),
     defineField({
       name: 'summary',
       title: 'Summary',
-      type: 'text',
-      rows: 3,
-      validation: (rule) => rule.required().max(240),
+      type: 'localizedText',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'coverImage',
       title: 'Cover image',
-      type: 'image',
-      options: {hotspot: true},
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alternative text',
-          type: 'string',
-          validation: (rule) => rule.required(),
-        }),
-      ],
+      type: 'imageWithAlt',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'technologies',
       title: 'Technologies',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
-      validation: (rule) => rule.unique(),
+      validation: (rule) => rule.required().min(1).unique(),
     }),
     defineField({
-      name: 'projectUrl',
-      title: 'Live project URL',
-      type: 'url',
-      validation: (rule) => rule.uri({scheme: ['http', 'https']}),
-    }),
-    defineField({
-      name: 'repositoryUrl',
-      title: 'Repository URL',
-      type: 'url',
-      validation: (rule) => rule.uri({scheme: ['http', 'https']}),
+      name: 'links',
+      title: 'Project links',
+      type: 'array',
+      of: [defineArrayMember({type: 'link'})],
     }),
     defineField({
       name: 'featured',
       title: 'Featured project',
       type: 'boolean',
       initialValue: false,
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'body',
       title: 'Project story',
-      type: 'array',
-      of: [defineArrayMember({type: 'block'})],
+      type: 'localizedPortableText',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'seo',
@@ -79,6 +72,6 @@ export const project = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title', subtitle: 'summary', media: 'coverImage'},
+    select: {title: 'title.en', subtitle: 'summary.en', media: 'coverImage.asset'},
   },
 })

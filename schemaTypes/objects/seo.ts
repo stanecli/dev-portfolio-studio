@@ -10,30 +10,24 @@ export const seo = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      description: 'Optional title used by search engines and social previews.',
-      validation: (rule) => rule.max(60).warning('Aim for 60 characters or fewer.'),
+      type: 'localizedString',
+      description: 'Aim for 60 characters or fewer in each language.',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
-      validation: (rule) => rule.max(160).warning('Aim for 160 characters or fewer.'),
+      type: 'localizedText',
+      description: 'Aim for 160 characters or fewer in each language.',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'socialImage',
       title: 'Social image',
-      type: 'image',
-      options: {hotspot: true},
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alternative text',
-          type: 'string',
-          validation: (rule) => rule.required(),
-        }),
-      ],
+      type: 'imageWithAlt',
     }),
   ],
+  preview: {
+    select: {title: 'title.en', subtitle: 'description.en', media: 'socialImage.asset'},
+  },
 })
