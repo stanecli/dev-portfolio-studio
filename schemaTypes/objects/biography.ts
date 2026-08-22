@@ -8,6 +8,12 @@ export const biography = defineType({
   icon: UserIcon,
   fields: [
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'localizedString',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'summary',
       title: 'Summary',
       type: 'localizedText',

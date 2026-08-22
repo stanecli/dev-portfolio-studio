@@ -20,6 +20,12 @@ export const homePage = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero image',
+      type: 'imageWithAlt',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'primaryCallToAction',
       title: 'Primary call to action',
       type: 'link',
