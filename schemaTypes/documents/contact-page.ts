@@ -27,6 +27,20 @@ export const contactPage = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'confirmationEmailSubject',
+      title: 'Confirmation email subject',
+      type: 'localizedString',
+      description: 'Sent to a visitor after their inquiry is accepted.',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'confirmationEmailBody',
+      title: 'Confirmation email body',
+      type: 'localizedText',
+      description: 'Explain when and how the visitor can expect a response.',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'seo',
       title: 'Search and social sharing',
       type: 'seo',
