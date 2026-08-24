@@ -34,11 +34,11 @@ export const contactPage = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'calendlyParagraphs',
-      title: 'Calendly paragraphs',
+      name: 'calendlySections',
+      title: 'Calendly sections',
       type: 'array',
-      description: 'Explanatory copy shown beside the Calendly scheduling widget.',
-      of: [defineArrayMember({type: 'localizedText'})],
+      description: 'Subtitle and description sections shown beside the Calendly widget.',
+      of: [defineArrayMember({type: 'contentSection'})],
       validation: (rule) => rule.required().min(1),
     }),
     defineField({
