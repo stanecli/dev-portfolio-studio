@@ -21,10 +21,25 @@ export const contactPage = defineType({
       validation: (rule) => rule.required().min(1),
     }),
     defineField({
+      name: 'primaryCallToAction',
+      title: 'Primary call to action',
+      type: 'link',
+      description: 'The main scheduling action shown in the page heading.',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'formCallToAction',
       title: 'Form call to action',
       type: 'link',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'calendlyParagraphs',
+      title: 'Calendly paragraphs',
+      type: 'array',
+      description: 'Explanatory copy shown beside the Calendly scheduling widget.',
+      of: [defineArrayMember({type: 'localizedText'})],
+      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: 'confirmationEmailSubject',
