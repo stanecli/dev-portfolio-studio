@@ -17,9 +17,9 @@ export const link = defineType({
       name: 'url',
       title: 'Destination',
       type: 'url',
-      description: 'Use a site path, an HTTP(S) URL, or a mailto link.',
+      description: 'Use a site path, an HTTP(S) URL, or a mailto or tel link.',
       validation: (rule) =>
-        rule.required().uri({allowRelative: true, scheme: ['http', 'https', 'mailto']}),
+        rule.required().uri({allowRelative: true, scheme: ['http', 'https', 'mailto', 'tel']}),
     }),
   ],
   preview: {
